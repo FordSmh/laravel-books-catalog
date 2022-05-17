@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [\App\Http\Controllers\AuthorController::class, 'publicIndex'])->name('home');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('books', \App\Http\Controllers\BookController::class);
+    Route::resource('authors', \App\Http\Controllers\AuthorController::class);
 });
+
+require __DIR__.'/auth.php';
