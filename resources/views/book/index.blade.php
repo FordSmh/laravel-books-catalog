@@ -7,6 +7,12 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if(session('success'))
+                <div class="bg-white inline-flex mb-5 p-3">{{ session('success') }}</div>
+            @endisset
+            @if(session('danger'))
+                <div class="bg-white inline-flex mb-5 p-3">{{ session('danger') }}</div>
+            @endisset
             <div class="mb-5">
                 <a href="{{route('books.create')}}" class="px-4 py-2 font-semibold text-sm bg-gray-800 hover:bg-gray-100 hover:text-gray-400 transition text-white rounded-full shadow-sm">Add new book</a>
             </div>
@@ -32,7 +38,15 @@
                                         @endforeach
                                     </td>
                                     <td>{{$book->publish_date}}</td>
-                                    <td><a href="{{route('books.edit', $book)}}">Edit</a></td>
+                                    <td>
+                                        <a href="{{route('books.edit', $book)}}">Edit</a>
+                                        <br>
+                                        <form method="POST" action="{{ route('books.destroy', $book) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
 

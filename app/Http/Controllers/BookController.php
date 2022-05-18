@@ -100,8 +100,8 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        $book->books()->detach($book->authors);
         $book->delete();
+        $book->authors()->detach($book->authors);
         return redirect()->route('books.index')->withDanger('Book '.$book->title.' has been deleted');
     }
 }
